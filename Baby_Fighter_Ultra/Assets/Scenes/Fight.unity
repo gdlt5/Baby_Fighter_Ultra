@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 87386610}
   - component: {fileID: 87386607}
   m_Layer: 0
-  m_Name: Player1
+  m_Name: ButterBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.7091699, y: -1.5478632, z: -0.07686438}
   m_LocalScale: {x: 5, y: 5, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1093978319}
+  - {fileID: 884367607}
+  - {fileID: 1352258762}
   m_Father: {fileID: 798932078}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
