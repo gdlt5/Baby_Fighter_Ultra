@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerController2 : MonoBehaviour {
     //private Rigidbody2D rb;
@@ -9,11 +10,18 @@ public class playerController2 : MonoBehaviour {
     private bool isGrounded = true;
     Transform target;
     float someScale;
-    // Use this for initialization
+
+    float startHealth = 100;
+    float currentHealth;   
+
+    public Image healthBar;
+
+     // Use this for initialization
     void Start(){
 
     	target = GameObject.FindWithTag("Player1").transform;
     	someScale = transform.localScale.x;
+        currentHealth = startHealth;
 
     }
     
@@ -72,20 +80,19 @@ public class playerController2 : MonoBehaviour {
 
 	    }
 
-
-
-
-
-
-
-
-
-
+        if(currentHealth == 0){
+            Destroy(this.gameObject);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll){
         if(coll.gameObject.name == "Floor"){
             isGrounded = true;
+        }
+
+        if(coll.gameObject.tag == "Player1"){
+            currentHealth = currentHealth - 10;
+            healthBar.fillAmount = currentHealth / startHealth;
         }
     }
 }
