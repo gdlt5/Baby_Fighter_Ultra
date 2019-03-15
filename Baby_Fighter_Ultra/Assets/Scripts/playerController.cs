@@ -99,10 +99,18 @@ public class playerController : MonoBehaviour {
 
 		/* Combat */
 		if(Input.GetButton("P1_Light") && Time.time > lightNext){
-			lightNext = Time.time + lightTimer;
-			actionCheck = true;
-			Vector2 bellyBump = new Vector2(transform.position.x + lightDistance, transform.position.y);
-			player.transform.position = bellyBump;
+			if (transform.position.x < target.position.x){
+				lightNext = Time.time + lightTimer;
+				actionCheck = true;
+				Vector2 bellyBump = new Vector2(transform.position.x + lightDistance, transform.position.y);
+				player.transform.position = bellyBump;
+			}
+			else{
+				lightNext = Time.time + lightTimer;
+				actionCheck = true;
+				Vector2 bellyBump = new Vector2(transform.position.x - lightDistance, transform.position.y);
+				player.transform.position = bellyBump;
+			}
 		}
 
 		if(currentHealth == 0){
