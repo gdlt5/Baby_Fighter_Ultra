@@ -147,6 +147,7 @@ MonoBehaviour:
   player: {fileID: 87386606}
   speed: 5
   healthBar: {fileID: 144077065}
+  blockCheck: 0
   actionCheck: 0
   lightTimer: 1
   lightDistance: 0.5
@@ -2020,7 +2021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -47.600006}
+  m_AnchoredPosition: {x: 4.25, y: -47.600006}
   m_SizeDelta: {x: 186.68, y: 258.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1574623464
@@ -2183,6 +2184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fightTime: 100
   timerText: {fileID: 1574623464}
+  startTime: 3
 --- !u!1 &1658120189
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,6 +2713,7 @@ MonoBehaviour:
   player: {fileID: 2083670292}
   speed: 5
   healthBar: {fileID: 2034884049}
+  blockCheck: 0
   actionCheck: 0
   lightTimer: 0
   lightDistance: 0
