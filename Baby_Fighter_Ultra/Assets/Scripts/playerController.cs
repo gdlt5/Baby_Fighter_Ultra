@@ -18,6 +18,9 @@ public class playerController : MonoBehaviour {
 
     playerController2 opponentScript;
 
+    /* Blocking Flag */
+    public bool blockCheck = false;
+
     /* Attack Flags */
     public bool actionCheck = false;
 
@@ -44,6 +47,7 @@ public class playerController : MonoBehaviour {
     void FixedUpdate () {
 
     	actionCheck = false;
+    	blockCheck = false;
 
     	/* Movement */
         if (transform.position.x < target.position.x){
@@ -57,6 +61,7 @@ public class playerController : MonoBehaviour {
     		}
 
     		if(Input.GetAxis("Horizontal") < -0.5){
+    			blockCheck = true;
 
     			Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/4) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
@@ -82,6 +87,7 @@ public class playerController : MonoBehaviour {
 			}
 
 			if(Input.GetAxis("Horizontal") > 0.5){
+				blockCheck = true;
 
 				Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/4) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
@@ -125,10 +131,12 @@ public class playerController : MonoBehaviour {
             isGrounded = true;
         }
         if(coll.gameObject.tag == "Player2"){
-        	if(opponentScript.actionCheck){
-        		currentHealth = currentHealth - 10;
-        		healthBar.fillAmount = currentHealth / startHealth;
-        	}
+        	if(blockCheck == false){
+	        	if(opponentScript.actionCheck){
+	        		currentHealth = currentHealth - 10;
+	        		healthBar.fillAmount = currentHealth / startHealth;
+	        	}
+	        }
         }
     }
 }
