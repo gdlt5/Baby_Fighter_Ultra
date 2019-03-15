@@ -16,10 +16,26 @@ public class playerController2 : MonoBehaviour {
 
     public Image healthBar;
 
+    playerController opponentScript;
+
+    /* Attack Flags */
+    public bool actionCheck = false;
+
+    public float lightTimer;
+    private float lightNext;
+
+    public float lightDistance;
+
+
+
+
+
      // Use this for initialization
     void Start(){
 
     	target = GameObject.FindWithTag("Player1").transform;
+        opponentScript = GameObject.FindWithTag("Player1").GetComponent<playerController>();
+
     	someScale = transform.localScale.x;
         currentHealth = startHealth;
 
@@ -70,20 +86,20 @@ public class playerController2 : MonoBehaviour {
 	            player.transform.Translate(movingVector.x, 0f, 0f);
 	        }
 
-
 	        if(Input.GetAxis("P2Vert") == 1){
 	            if(isGrounded){
 	                isGrounded = false;
 	                GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
 	            }
 	        }
-
 	    }
-
+        /* End Movement */
+        
         if(currentHealth == 0){
             Destroy(this.gameObject);
         }
     }
+
 
     void OnCollisionEnter2D(Collision2D coll){
         if(coll.gameObject.name == "Floor"){
@@ -91,8 +107,10 @@ public class playerController2 : MonoBehaviour {
         }
 
         if(coll.gameObject.tag == "Player1"){
-            currentHealth = currentHealth - 10;
-            healthBar.fillAmount = currentHealth / startHealth;
+            if(opponentScript.actionCheck){
+                currentHealth = currentHealth - 10;
+                healthBar.fillAmount = currentHealth / startHealth;
+            }
         }
     }
 }

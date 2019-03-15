@@ -16,11 +16,25 @@ public class playerController : MonoBehaviour {
 
     public Image healthBar;
 
-        // Use this for initialization
+    playerController2 opponentScript;
 
+    /* Attack Flags */
+    public bool actionCheck = false;
+
+    public float lightTimer;
+    private float lightNext;
+
+    public float lightDistance;
+
+
+
+
+    // Use this for initialization
     void Start(){
 
     	target = GameObject.FindWithTag("Player2").transform;
+        opponentScript = GameObject.FindWithTag("Player2").GetComponent<playerController2>();
+
     	someScale = transform.localScale.x;
     	currentHealth = startHealth;
 
@@ -29,6 +43,9 @@ public class playerController : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
 
+    	actionCheck = false;
+
+    	/* Movement */
         if (transform.position.x < target.position.x){
             transform.localScale = new Vector2(someScale, transform.localScale.y);
 
@@ -78,6 +95,15 @@ public class playerController : MonoBehaviour {
 		        }
 		    }
 		}
+		/* End Movement */
+
+		/* Combat */
+		if(Input.GetButton("P1_Light") && Time.time > lightNext){
+			lightNext = Time.time + lightTimer;
+			actionCheck = true;
+			Vector2 bellyBump = new Vector2(transform.position.x + lightDistance, transform.position.y);
+			player.transform.position = bellyBump;
+		}
 
 		if(currentHealth == 0){
 			Destroy(this.gameObject);
@@ -85,13 +111,16 @@ public class playerController : MonoBehaviour {
 
     }
 
+
     void OnCollisionEnter2D(Collision2D coll){
         if(coll.gameObject.name == "Floor"){
             isGrounded = true;
         }
         if(coll.gameObject.tag == "Player2"){
-        	currentHealth = currentHealth - 10;
-        	healthBar.fillAmount = currentHealth / startHealth;
+        	if(opponentScript.actionCheck){
+        		currentHealth = currentHealth - 10;
+        		healthBar.fillAmount = currentHealth / startHealth;
+        	}
         }
     }
 }
