@@ -14,27 +14,28 @@ public class playerController2 : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
 
-        if(Input.GetKey("up")){
+        if(Input.GetAxis("P2Hor") > 0.5){
+
+            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
+
+            player.transform.Translate(movingVector.x, 0f, 0f);
+        }
+
+        if(Input.GetAxis("P2Hor") < -0.5){
+
+            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed/4) * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
+
+            player.transform.Translate(movingVector.x, 0f, 0f);
+        }
+
+
+        if(Input.GetAxis("P2Vert") == 1){
             if(isGrounded){
                 isGrounded = false;
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0,5), ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
             }
         }
 
-        Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert")* speed * Time.deltaTime);
-
-        player.transform.Translate(movingVector.x, movingVector.y, 0f);
-
-        /*
-        else if(Input.GetKey("right")){
-            player.transform.Translate(Vector3.right*speed*Time.deltaTime);
-
-        }
-        else if(Input.GetKey("left")){
-            player.transform.Translate(Vector3.left*speed*Time.deltaTime);
-
-        }
-        */
     }
 
     void OnCollisionEnter2D(Collision2D coll){
