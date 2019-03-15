@@ -20,6 +20,9 @@ public class playerController2 : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
         if (transform.position.x > target.position.x){
+
+            transform.localScale = new Vector2(someScale, transform.localScale.y);
+
 	        if(Input.GetAxis("P2Hor") > 0.5){
 
 	            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed/4) * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
