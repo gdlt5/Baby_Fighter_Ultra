@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class cameraPan : MonoBehaviour
 {
-	float margin = 0.01f;
+	float margin = 0.001f;
 
 	float z0 = 0f;
 	float zCam;
