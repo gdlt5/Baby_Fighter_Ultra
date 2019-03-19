@@ -149,8 +149,19 @@ MonoBehaviour:
   healthBar: {fileID: 144077065}
   blockCheck: 0
   actionCheck: 0
-  lightTimer: 1
-  lightDistance: 0.5
+  lightCheck: 0
+  lightTimer: 0.25
+  lightDistance: 1000
+  medCheck: 0
+  medTimer: 0.125
+  medDistance: 750
+  heavyCheck: 0
+  heavyTimer: 0.05
+  heavyDownTime: 3
+  heavyDistance: 500
+  lightDamage: 10
+  medDamage: 15
+  heavyDamage: 20
 --- !u!212 &87386608
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1486,8 +1497,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007240823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.61, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
+  m_LocalScale: {x: 3, y: 2.104904, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3063,7 +3074,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
 --- !u!222 &2034884050
 CanvasRenderer:
@@ -3256,6 +3267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2083670292}
   speed: 5
+  startHealth: 100
+  currentHealth: 0
   healthBar: {fileID: 2034884049}
   blockCheck: 0
   actionCheck: 0

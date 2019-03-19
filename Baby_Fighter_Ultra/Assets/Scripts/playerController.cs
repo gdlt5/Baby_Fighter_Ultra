@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour {
     Transform target;
     float someScale;
 
+
     float startHealth = 100;
     float currentHealth;
 
@@ -24,10 +25,32 @@ public class playerController : MonoBehaviour {
     /* Attack Flags */
     public bool actionCheck = false;
 
+
+    public bool lightCheck = false;
     public float lightTimer;
     private float lightNext;
 
     public float lightDistance;
+
+    public bool medCheck = false;
+    public float medTimer;
+    private float medNext;
+
+    public float medDistance;
+
+    public bool heavyCheck = false;
+    public bool heavyDownCheck = false;
+    public float heavyTimer;
+    private float heavyNext;
+    private float heavyDown;
+    public float heavyDownTime;
+
+    public float heavyDistance;
+
+    public float lightDamage;
+    public float medDamage;
+    public float heavyDamage;
+
 
 
 
@@ -46,29 +69,47 @@ public class playerController : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
 
-    	actionCheck = false;
+        if(Time.time >= lightNext && lightCheck == true){
+           GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    	   lightCheck = false;
+           actionCheck = false;
+        }
+        if(Time.time >= medNext && medCheck == true){
+           GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+           medCheck = false;
+           actionCheck = false;
+        }
+        if(Time.time >= heavyNext && heavyCheck == true){
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            heavyCheck = false;
+        }
+        if(Time.time >= heavyDown && heavyDownCheck == true){
+            actionCheck = false;
+        }
+
+
     	blockCheck = false;
 
     	/* Movement */
         if (transform.position.x < target.position.x){
             transform.localScale = new Vector2(someScale, transform.localScale.y);
 
-            if(Input.GetAxis("Horizontal") > 0.5){
+            if(Input.GetAxis("Horizontal") > 0.5 && actionCheck == false){
 
 	        	Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
 	        	player.transform.Translate(movingVector.x, 0f, 0f);
     		}
 
-    		if(Input.GetAxis("Horizontal") < -0.5){
+    		if(Input.GetAxis("Horizontal") < -0.5 && actionCheck == false){
     			blockCheck = true;
 
-    			Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/4) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
+    			Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/2) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
 	       		player.transform.Translate(movingVector.x, 0f, 0f);
     		}
 
-        	if(Input.GetAxis("Vertical") == 1){
+        	if(Input.GetAxis("Vertical") == 1 && actionCheck == false){
             	if(isGrounded){
                 	isGrounded = false;
                 	GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
@@ -79,22 +120,22 @@ public class playerController : MonoBehaviour {
         else{
             transform.localScale = new Vector2(-someScale, transform.localScale.y);
 
-		    if(Input.GetAxis("Horizontal") < -0.5){
+		    if(Input.GetAxis("Horizontal") < -0.5 && actionCheck == false){
 
 		        Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
 		        player.transform.Translate(movingVector.x, 0f, 0f);
 			}
 
-			if(Input.GetAxis("Horizontal") > 0.5){
+			if(Input.GetAxis("Horizontal") > 0.5 && actionCheck == false){
 				blockCheck = true;
 
-				Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/4) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
+				Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/2) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
 		        player.transform.Translate(movingVector.x, 0f, 0f);
 			}
 
-		    if(Input.GetAxis("Vertical") == 1){
+		    if(Input.GetAxis("Vertical") == 1 && actionCheck == false){
 		        if(isGrounded){
 		            isGrounded = false;
 		            GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
@@ -104,20 +145,56 @@ public class playerController : MonoBehaviour {
 		/* End Movement */
 
 		/* Combat */
-		if(Input.GetButton("P1_Light") && Time.time > lightNext){
-			if (transform.position.x < target.position.x){
-				lightNext = Time.time + lightTimer;
-				actionCheck = true;
-				Vector2 bellyBump = new Vector2(transform.position.x + lightDistance, transform.position.y);
-				player.transform.position = bellyBump;
-			}
-			else{
-				lightNext = Time.time + lightTimer;
-				actionCheck = true;
-				Vector2 bellyBump = new Vector2(transform.position.x - lightDistance, transform.position.y);
-				player.transform.position = bellyBump;
-			}
-		}
+        if(actionCheck == false){
+
+    		if(Input.GetButtonDown("P1_Light") && actionCheck == false){
+    			if (transform.position.x < target.position.x){
+    				lightNext = Time.time + lightTimer;
+    				lightCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right*lightDistance);			}
+    			else{
+    				lightNext = Time.time + lightTimer;
+    				lightCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left*lightDistance);
+    			}
+    		}
+
+            if(Input.GetButtonDown("P1_Med") && actionCheck == false){
+                if (transform.position.x < target.position.x){
+                    medNext = Time.time + medTimer;
+                    medCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right*medDistance);
+                }
+                else{
+                    medNext = Time.time + medTimer;
+                    medCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left*medDistance);
+                }
+            }
+
+
+            if(Input.GetButtonDown("P1_Heavy") && actionCheck == false){
+                if (transform.position.x < target.position.x){
+                    heavyNext = Time.time + heavyTimer;
+                    heavyDown = Time.time + heavyDownTime;
+                    heavyDownCheck = true;
+                    heavyCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right*heavyDistance);
+                }
+                else{
+                    heavyNext = Time.time + heavyTimer;
+                    heavyDown = Time.time + heavyDownTime;
+                    heavyDownCheck = true;
+                    heavyCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left*heavyDistance);
+                }
+
+            }
+
+            if(lightCheck || medCheck || heavyCheck){
+                actionCheck = true;
+            }
+        }
 
 		if(currentHealth == 0){
 			Destroy(this.gameObject);
@@ -131,12 +208,27 @@ public class playerController : MonoBehaviour {
             isGrounded = true;
         }
         if(coll.gameObject.tag == "Player2"){
-        	if(blockCheck == false){
-	        	if(opponentScript.actionCheck){
-	        		currentHealth = currentHealth - 10;
-	        		healthBar.fillAmount = currentHealth / startHealth;
-	        	}
-	        }
+            if(opponentScript.blockCheck == false){
+                if(lightCheck){
+                    opponentScript.currentHealth = opponentScript.currentHealth - lightDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    lightCheck = false;
+                    actionCheck = false;
+               }
+               if(medCheck){
+                    opponentScript.currentHealth = opponentScript.currentHealth - medDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    medCheck = false;
+                    actionCheck = false;
+               }
+               if(heavyCheck){
+                    opponentScript.currentHealth = opponentScript.currentHealth - heavyDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    heavyCheck = false;
+                    actionCheck = false;
+               }
+
+            }
         }
     }
 }

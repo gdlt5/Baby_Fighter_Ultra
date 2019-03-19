@@ -11,8 +11,8 @@ public class playerController2 : MonoBehaviour {
     Transform target;
     float someScale;
 
-    float startHealth = 100;
-    float currentHealth;   
+    public float startHealth = 100;
+    public float currentHealth;   
 
     public Image healthBar;
 
@@ -117,9 +117,15 @@ public class playerController2 : MonoBehaviour {
 
         if(coll.gameObject.tag == "Player1"){
             if(blockCheck == false){
-                if(opponentScript.actionCheck){
+                if(opponentScript.lightCheck){
                     currentHealth = currentHealth - 10;
                     healthBar.fillAmount = currentHealth / startHealth;
+                    opponentScript.lightCheck = false;
+                }
+                if(opponentScript.medCheck){
+                    currentHealth = currentHealth - 15;
+                    healthBar.fillAmount = currentHealth / startHealth;
+                    opponentScript.medCheck = false;
                 }
             }
         }
