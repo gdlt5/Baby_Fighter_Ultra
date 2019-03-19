@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class startScreenTransition : MonoBehaviour
 {
+
+	public Animator animator;
+	
     void Update()
     {
         if (Input.anyKey)
         {
+        	animator.SetTrigger("FadeOut");
 			SceneManager.LoadScene(sceneBuildIndex:1);        
 		}
     }
