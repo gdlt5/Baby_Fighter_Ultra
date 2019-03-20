@@ -16,6 +16,9 @@ public class fightManager : MonoBehaviour
     public playerController2 player2;
     public Text winText;
 
+    public Text timeWinner;
+    public float textTimer;
+    public float disableTimeText;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +31,31 @@ public class fightManager : MonoBehaviour
     void Update()
     {
         startTrigger += Time.deltaTime;
-        if(startTrigger >= startTime ){
+    
+        if(startTrigger >= startTime){
             if(player1.currentHealth > 0 && player2.currentHealth > 0){
                  fightTime -= Time.deltaTime;
                  displayTime = (int) fightTime;
                  timerText.text = displayTime.ToString();
+
+                if(fightTime < 0){
+                    timerText.text = "0"; 
+                    if(fightTime <= disableTimeText){
+                        if(player1.currentHealth > player2.currentHealth){
+                            winText.text = "Player 1 Wins!";
+                        }
+                        else if(player1.currentHealth < player2.currentHealth){
+                            winText.text = "Player 2 Wins!";
+                        }
+                        else if(player1.currentHealth == player2.currentHealth){
+                            winText.text = "Draw!";
+                        }
+                    }
+                    else{
+                        winText.text = "Time!";
+                    }
+                }
+
             }
             else{
                 if(player1.currentHealth <= 0 && player2.currentHealth > 0){
@@ -41,15 +64,11 @@ public class fightManager : MonoBehaviour
                 else if(player2.currentHealth <= 0 && player1.currentHealth > 0){
                     winText.text = "Player 1 Wins!";
                 }
-                else{
+                else if(player1.currentHealth <= 0 && player2.currentHealth <= 0){
                     winText.text = "Draw!";
                 }
             }
         }
 
-        if(fightTime < 0){
-            fightTime = 0;
-            winText.text = "Time!";
-        }
     }
 }
