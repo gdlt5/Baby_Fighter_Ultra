@@ -105,7 +105,7 @@ public class playerController2 : MonoBehaviour {
         /* End Movement */
         
         if(currentHealth == 0){
-            Destroy(this.gameObject);
+            player.GetComponent<playerController2>().enabled = false;
         }
     }
 

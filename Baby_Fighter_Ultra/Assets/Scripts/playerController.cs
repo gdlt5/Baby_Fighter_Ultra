@@ -13,7 +13,7 @@ public class playerController : MonoBehaviour {
 
 
     float startHealth = 100;
-    float currentHealth;
+    public float currentHealth;
 
     public Image healthBar;
 
@@ -197,7 +197,7 @@ public class playerController : MonoBehaviour {
         }
 
 		if(currentHealth == 0){
-			Destroy(this.gameObject);
+			player.GetComponent<playerController>().enabled = false;
 		}
 
     }

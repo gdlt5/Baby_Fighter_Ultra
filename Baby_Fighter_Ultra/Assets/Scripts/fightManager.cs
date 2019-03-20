@@ -11,6 +11,12 @@ public class fightManager : MonoBehaviour
 	public Text timerText;
     public float startTime;
     private float startTrigger = 0f;
+
+    public playerController player1;
+    public playerController2 player2;
+    public Text winText;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,14 +29,27 @@ public class fightManager : MonoBehaviour
     {
         startTrigger += Time.deltaTime;
         if(startTrigger >= startTime ){
-             fightTime -= Time.deltaTime;
-             displayTime = (int) fightTime;
-             timerText.text = displayTime.ToString();
+            if(player1.currentHealth > 0 && player2.currentHealth > 0){
+                 fightTime -= Time.deltaTime;
+                 displayTime = (int) fightTime;
+                 timerText.text = displayTime.ToString();
+            }
+            else{
+                if(player1.currentHealth <= 0 && player2.currentHealth > 0){
+                    winText.text = "Player 2 Wins!";
+                }
+                else if(player2.currentHealth <= 0 && player1.currentHealth > 0){
+                    winText.text = "Player 1 Wins!";
+                }
+                else{
+                    winText.text = "Draw!";
+                }
+            }
         }
-         /*
-         if (fightTime <= 0.0f){
-		    timerEnded();
-		 }
-		 */
+
+        if(fightTime < 0){
+            fightTime = 0;
+            winText.text = "Time!";
+        }
     }
 }
