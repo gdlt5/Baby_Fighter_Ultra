@@ -23,11 +23,29 @@ public class playerController2 : MonoBehaviour {
 
     /* Attack Flags */
     public bool actionCheck = false;
-
     public float lightTimer;
     private float lightNext;
 
     public float lightDistance;
+
+    public bool medCheck = false;
+    public float medTimer;
+    private float medNext;
+
+    public float medDistance;
+
+    public bool heavyCheck = false;
+    public bool heavyDownCheck = false;
+    public float heavyTimer;
+    private float heavyNext;
+    private float heavyDown;
+    public float heavyDownTime;
+
+    public float heavyDistance;
+
+    public float lightDamage;
+    public float medDamage;
+    public float heavyDamage;
 
 
 
