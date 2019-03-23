@@ -133,7 +133,7 @@ public class playerController : MonoBehaviour {
         	if(Input.GetAxis("Vertical") == 1 && actionCheck == false){
             	if(isGrounded){
                 	isGrounded = false;
-                	GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
+                	GetComponent<Rigidbody2D>().AddForce(new Vector2(0,15), ForceMode2D.Impulse);
             	}
         	}
         }

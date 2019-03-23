@@ -28,7 +28,6 @@ public class fightManager : MonoBehaviour
     {
     	displayTime = (int) fightTime;
         timerText.text = displayTime.ToString();
-        returnToTitle = startTime + fightTime - disableTimeText + Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -43,6 +42,8 @@ public class fightManager : MonoBehaviour
                  timerText.text = displayTime.ToString();
 
                 if(fightTime < 0){
+                    player1.enabled = false;
+                    player2.enabled = false;
                     timerText.text = "0"; 
                     if(fightTime <= disableTimeText){
                         if(player1.currentHealth > player2.currentHealth){
@@ -62,6 +63,8 @@ public class fightManager : MonoBehaviour
 
             }
             else{
+                player1.enabled = false;
+                player2.enabled = false;
                 if(player1.currentHealth <= 0 && player2.currentHealth > 0){
                     winText.text = "Player 2 Wins!";
                 }
@@ -74,7 +77,7 @@ public class fightManager : MonoBehaviour
             }
         }
 
-        if(fightTime <= (-returnToTitle)){
+        if(fightTime <= (returnToTitle)){
             //animate.SetBool("Exit", true);
             SceneManager.LoadScene(sceneBuildIndex: 0);
 

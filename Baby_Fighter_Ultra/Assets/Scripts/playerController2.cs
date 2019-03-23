@@ -135,7 +135,7 @@ public class playerController2 : MonoBehaviour {
                 if (isGrounded)
                 {
                     isGrounded = false;
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 11), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 15), ForceMode2D.Impulse);
                 }
             }
         }
