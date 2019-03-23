@@ -61,70 +61,169 @@ public class playerController2 : MonoBehaviour {
         currentHealth = startHealth;
 
     }
-    
+
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
+
+        if (Time.time >= lightNext && lightCheck == true)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            lightCheck = false;
+            actionCheck = false;
+        }
+        if (Time.time >= medNext && medCheck == true)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            medCheck = false;
+            actionCheck = false;
+        }
+        if (Time.time >= heavyNext && heavyCheck == true)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            heavyCheck = false;
+        }
+        if (Time.time >= heavyDown && heavyDownCheck == true)
+        {
+            actionCheck = false;
+        }
+
 
         blockCheck = false;
 
-        if (transform.position.x > target.position.x){
-
+        /* Movement */
+        if (transform.position.x < target.position.x)
+        {
             transform.localScale = new Vector2(someScale, transform.localScale.y);
 
-	        if(Input.GetAxis("P2Hor") > 0.5){
+            if (Input.GetAxis("Horizontal") > 0.5 && actionCheck == false)
+            {
 
+                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
+
+                player.transform.Translate(movingVector.x, 0f, 0f);
+            }
+
+            if (Input.GetAxis("Horizontal") < -0.5 && actionCheck == false)
+            {
                 blockCheck = true;
 
-	            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed/4) * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
+                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed / 2) * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
 
-	            player.transform.Translate(movingVector.x, 0f, 0f);
-	        }
+                player.transform.Translate(movingVector.x, 0f, 0f);
+            }
 
-	        if(Input.GetAxis("P2Hor") < -0.5){
-
-	            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
-
-	            player.transform.Translate(movingVector.x, 0f, 0f);
-	        }
-
-
-	        if(Input.GetAxis("P2Vert") == 1){
-	            if(isGrounded){
-	                isGrounded = false;
-	                GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
-	            }
-	        }
-	    }
-	    else{
-	    	transform.localScale = new Vector2(-someScale, transform.localScale.y);
-	        
-	        if(Input.GetAxis("P2Hor") > 0.5){
-
-	            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
-
-	            player.transform.Translate(movingVector.x, 0f, 0f);
-	        }
-
-	        if(Input.GetAxis("P2Hor") < -0.5){
-                blockCheck = true;
-
-	            Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed/4) * Time.deltaTime, Input.GetAxis("P2Vert")* 0 * Time.deltaTime);
-
-	            player.transform.Translate(movingVector.x, 0f, 0f);
-	        }
-
-	        if(Input.GetAxis("P2Vert") == 1){
-	            if(isGrounded){
-	                isGrounded = false;
-	                GetComponent<Rigidbody2D>().AddForce(new Vector2(0,10), ForceMode2D.Impulse);
-	            }
-	        }
-	    }
-        /* End Movement */
-        
-        if(currentHealth == 0){
-            player.GetComponent<playerController2>().enabled = false;
+            if (Input.GetAxis("Vertical") == 1 && actionCheck == false)
+            {
+                if (isGrounded)
+                {
+                    isGrounded = false;
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+                }
+            }
         }
+
+        else
+        {
+            transform.localScale = new Vector2(-someScale, transform.localScale.y);
+
+            if (Input.GetAxis("Horizontal") < -0.5 && actionCheck == false)
+            {
+
+                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
+
+                player.transform.Translate(movingVector.x, 0f, 0f);
+            }
+
+            if (Input.GetAxis("Horizontal") > 0.5 && actionCheck == false)
+            {
+                blockCheck = true;
+
+                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed / 2) * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
+
+                player.transform.Translate(movingVector.x, 0f, 0f);
+            }
+
+            if (Input.GetAxis("Vertical") == 1 && actionCheck == false)
+            {
+                if (isGrounded)
+                {
+                    isGrounded = false;
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+                }
+            }
+        }
+        /* End Movement */
+
+        /* Combat */
+        if (actionCheck == false)
+        {
+
+            if (Input.GetButtonDown("P2_Light") && actionCheck == false)
+            {
+                if (transform.position.x < target.position.x)
+                {
+                    lightNext = Time.time + lightTimer;
+                    lightCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right * lightDistance);
+                }
+                else
+                {
+                    lightNext = Time.time + lightTimer;
+                    lightCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left * lightDistance);
+                }
+            }
+
+            if (Input.GetButtonDown("P2_Med") && actionCheck == false)
+            {
+                if (transform.position.x < target.position.x)
+                {
+                    medNext = Time.time + medTimer;
+                    medCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right * medDistance);
+                }
+                else
+                {
+                    medNext = Time.time + medTimer;
+                    medCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left * medDistance);
+                }
+            }
+
+
+            if (Input.GetButtonDown("P2_Heavy") && actionCheck == false)
+            {
+                if (transform.position.x < target.position.x)
+                {
+                    heavyNext = Time.time + heavyTimer;
+                    heavyDown = Time.time + heavyDownTime;
+                    heavyDownCheck = true;
+                    heavyCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.right * heavyDistance);
+                }
+                else
+                {
+                    heavyNext = Time.time + heavyTimer;
+                    heavyDown = Time.time + heavyDownTime;
+                    heavyDownCheck = true;
+                    heavyCheck = true;
+                    GetComponent<Rigidbody2D>().AddForce(Vector2.left * heavyDistance);
+                }
+
+            }
+
+            if (lightCheck || medCheck || heavyCheck)
+            {
+                actionCheck = true;
+            }
+        }
+
+        if (currentHealth == 0)
+        {
+            player.GetComponent<playerController>().enabled = false;
+        }
+
     }
 
 
@@ -132,18 +231,26 @@ public class playerController2 : MonoBehaviour {
         if(coll.gameObject.name == "Floor"){
             isGrounded = true;
         }
-
         if(coll.gameObject.tag == "Player1"){
             if(opponentScript.blockCheck == false){
                 if(opponentScript.lightCheck){
-                    currentHealth = currentHealth - 10;
-                    healthBar.fillAmount = currentHealth / startHealth;
-                    opponentScript.lightCheck = false;
+                    opponentScript.currentHealth = opponentScript.currentHealth - lightDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    lightCheck = false;
+                    actionCheck = false;
                 }
                 if(opponentScript.medCheck){
-                    currentHealth = currentHealth - 15;
-                    healthBar.fillAmount = currentHealth / startHealth;
-                    opponentScript.medCheck = false;
+                    opponentScript.currentHealth = opponentScript.currentHealth - medDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    medCheck = false;
+                    actionCheck = false;
+                }
+                if(heavyCheck)
+                {
+                    opponentScript.currentHealth = opponentScript.currentHealth - heavyDamage;
+                    opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
+                    heavyCheck = false;
+                    actionCheck = false;
                 }
             }
         }
