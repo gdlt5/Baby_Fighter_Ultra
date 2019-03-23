@@ -58,7 +58,7 @@ public class playerController2 : MonoBehaviour {
     //public float rangeDamage;
 
 
-
+    Animator animate;
 
 
      // Use this for initialization
@@ -75,6 +75,7 @@ public class playerController2 : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
+        animate.SetInteger("Attack", 0);
 
         if (Time.time >= lightNext && lightCheck == true)
         {
@@ -171,6 +172,7 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetButtonDown("P2_Light") && actionCheck == false)
             {
+                animate.SetInteger("Attack", 1);
                 if (transform.position.x < target.position.x)
                 {
                     lightNext = Time.time + lightTimer;
@@ -187,6 +189,7 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetButtonDown("P2_Med") && actionCheck == false)
             {
+                animate.SetInteger("Attack", 2);
                 if (transform.position.x < target.position.x)
                 {
                     medNext = Time.time + medTimer;
@@ -207,6 +210,7 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetButtonDown("P2_Heavy") && actionCheck == false)
             {
+                animate.SetInteger("Attack", 3);
                 if (transform.position.x < target.position.x)
                 {
                     heavyNext = Time.time + heavyTimer;
@@ -233,7 +237,8 @@ public class playerController2 : MonoBehaviour {
 
             if(Input.GetButtonDown("P2_Range") && actionCheck == false)
             {
-                if(transform.position.x < target.position.x)
+                animate.SetInteger("Attack", 4);
+                if (transform.position.x < target.position.x)
                 {
                     rangeNext = Time.time + rangeTimer;
                     rangeCheck = true;
