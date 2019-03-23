@@ -23,6 +23,9 @@ public class playerController2 : MonoBehaviour {
 
     /* Attack Flags */
     public bool actionCheck = false;
+
+
+    public bool lightCheck = false;
     public float lightTimer;
     private float lightNext;
 
