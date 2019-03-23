@@ -162,6 +162,9 @@ MonoBehaviour:
   heavyTimer: 0.05
   heavyDownTime: 3
   heavyDistance: 500
+  rangeCheck: 0
+  rangeTimer: 10
+  rangeSpeed: 50
   lightDamage: 10
   medDamage: 15
   heavyDamage: 20

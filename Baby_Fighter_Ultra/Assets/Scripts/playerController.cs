@@ -44,8 +44,12 @@ public class playerController : MonoBehaviour {
     private float heavyNext;
     private float heavyDown;
     public float heavyDownTime;
-
     public float heavyDistance;
+
+    public bool rangeCheck = false;
+    public float rangeTimer;
+    private float rangeNext;
+    public float rangeSpeed;
 
     public float lightDamage;
     public float medDamage;
@@ -85,6 +89,11 @@ public class playerController : MonoBehaviour {
         }
         if(Time.time >= heavyDown && heavyDownCheck == true){
             actionCheck = false;
+        }
+        if(Time.time >= rangeNext && rangeCheck == true){
+           GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+           rangeCheck = false;
+           actionCheck = false;
         }
 
 
@@ -188,7 +197,12 @@ public class playerController : MonoBehaviour {
                     heavyCheck = true;
                     GetComponent<Rigidbody2D>().AddForce(Vector2.left*heavyDistance);
                 }
+            }
 
+            if(Input.GetButtonDown("P1_Range") && actionCheck == false){
+                rangeNext = Time.time + rangeTimer;
+                rangeCheck = true;
+                player.transform.position = Vector2.MoveTowards(player.transform.position, target.position, rangeSpeed * Time.deltaTime);
             }
 
             if(lightCheck || medCheck || heavyCheck){
