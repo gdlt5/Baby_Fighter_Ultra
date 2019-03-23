@@ -57,6 +57,11 @@ public class playerController : MonoBehaviour {
 
 
 
+    /*Animator*/
+    Animator animate;
+
+
+
 
 
     // Use this for initialization
@@ -68,10 +73,14 @@ public class playerController : MonoBehaviour {
     	someScale = transform.localScale.x;
     	currentHealth = startHealth;
 
+        animate = GetComponent<Animator>();
     }
     
     // Update is called once per frame
     void FixedUpdate () {
+
+        animate.SetBool("move", false);
+        animate.SetInteger("attack", 0);
 
         if(Time.time >= lightNext && lightCheck == true){
            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -104,6 +113,7 @@ public class playerController : MonoBehaviour {
             transform.localScale = new Vector2(someScale, transform.localScale.y);
 
             if(Input.GetAxis("Horizontal") > 0.5 && actionCheck == false){
+                animate.SetBool("move", true);
 
 	        	Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
@@ -111,6 +121,8 @@ public class playerController : MonoBehaviour {
     		}
 
     		if(Input.GetAxis("Horizontal") < -0.5 && actionCheck == false){
+                animate.SetBool("move", false);
+
     			blockCheck = true;
 
     			Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/2) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
@@ -130,6 +142,7 @@ public class playerController : MonoBehaviour {
             transform.localScale = new Vector2(-someScale, transform.localScale.y);
 
 		    if(Input.GetAxis("Horizontal") < -0.5 && actionCheck == false){
+                animate.SetBool("move", true);
 
 		        Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
 
@@ -137,6 +150,9 @@ public class playerController : MonoBehaviour {
 			}
 
 			if(Input.GetAxis("Horizontal") > 0.5 && actionCheck == false){
+                animate.SetBool("move", false);
+
+
 				blockCheck = true;
 
 				Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed/2) * Time.deltaTime, Input.GetAxis("Vertical")* 0 * Time.deltaTime);
@@ -157,6 +173,7 @@ public class playerController : MonoBehaviour {
         if(actionCheck == false){
 
     		if(Input.GetButtonDown("P1_Light") && actionCheck == false){
+                animate.SetInteger("attack", 1);
     			if (transform.position.x < target.position.x){
     				lightNext = Time.time + lightTimer;
     				lightCheck = true;
