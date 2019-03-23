@@ -99,24 +99,24 @@ public class playerController2 : MonoBehaviour {
         {
             transform.localScale = new Vector2(someScale, transform.localScale.y);
 
-            if (Input.GetAxis("Horizontal") > 0.5 && actionCheck == false)
+            if (Input.GetAxis("P2Hor") > 0.5 && actionCheck == false)
             {
 
-                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
+                Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
 
                 player.transform.Translate(movingVector.x, 0f, 0f);
             }
 
-            if (Input.GetAxis("Horizontal") < -0.5 && actionCheck == false)
+            if (Input.GetAxis("P2Hor") < -0.5 && actionCheck == false)
             {
                 blockCheck = true;
 
-                Vector2 movingVector = new Vector2(Input.GetAxis("Horizontal") * (speed / 2) * Time.deltaTime, Input.GetAxis("Vertical") * 0 * Time.deltaTime);
+                Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed / 2) * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
 
                 player.transform.Translate(movingVector.x, 0f, 0f);
             }
 
-            if (Input.GetAxis("Vertical") == 1 && actionCheck == false)
+            if (Input.GetAxis("P2Vert") == 1 && actionCheck == false)
             {
                 if (isGrounded)
                 {
