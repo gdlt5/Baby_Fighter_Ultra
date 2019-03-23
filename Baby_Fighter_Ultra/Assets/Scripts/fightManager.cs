@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class fightManager : MonoBehaviour
 {
@@ -16,15 +18,17 @@ public class fightManager : MonoBehaviour
     public playerController2 player2;
     public Text winText;
 
-    public Text timeWinner;
-    public float textTimer;
     public float disableTimeText;
+    public float returnToTitle;
+
+    public Animator animate;
 
     // Start is called before the first frame update
     void Start()
     {
     	displayTime = (int) fightTime;
         timerText.text = displayTime.ToString();
+        returnToTitle = startTime + fightTime - disableTimeText + Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -68,6 +72,12 @@ public class fightManager : MonoBehaviour
                     winText.text = "Draw!";
                 }
             }
+        }
+
+        if(fightTime <= (-returnToTitle)){
+            //animate.SetBool("Exit", true);
+            SceneManager.LoadScene(sceneBuildIndex: 0);
+
         }
 
     }

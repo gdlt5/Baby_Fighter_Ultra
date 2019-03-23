@@ -70,6 +70,7 @@ public class playerController2 : MonoBehaviour {
     	someScale = transform.localScale.x;
         currentHealth = startHealth;
 
+        animate = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -96,6 +97,11 @@ public class playerController2 : MonoBehaviour {
         }
         if (Time.time >= heavyDown && heavyDownCheck == true)
         {
+            actionCheck = false;
+        }
+        if (Time.time >= rangeNext && rangeCheck == true)
+        {
+            rangeCheck = false;
             actionCheck = false;
         }
 
@@ -129,7 +135,7 @@ public class playerController2 : MonoBehaviour {
                 if (isGrounded)
                 {
                     isGrounded = false;
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 11), ForceMode2D.Impulse);
                 }
             }
         }
@@ -210,7 +216,9 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetButtonDown("P2_Heavy") && actionCheck == false)
             {
+                
                 animate.SetInteger("Attack", 3);
+
                 if (transform.position.x < target.position.x)
                 {
                     heavyNext = Time.time + heavyTimer;
@@ -227,6 +235,7 @@ public class playerController2 : MonoBehaviour {
                     heavyCheck = true;
                     GetComponent<Rigidbody2D>().AddForce(Vector2.left * heavyDistance);
                 }
+            //transform.localScale = new Vector2(-someScale, transform.localScale.y);
 
 
             }
@@ -238,22 +247,21 @@ public class playerController2 : MonoBehaviour {
             if(Input.GetButtonDown("P2_Range") && actionCheck == false)
             {
                 animate.SetInteger("Attack", 4);
-                if (transform.position.x < target.position.x)
+                if (transform.position.x > target.position.x)
                 {
                     rangeNext = Time.time + rangeTimer;
                     rangeCheck = true;
                     Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
-                    iP.AddForce(rangeEmitter.transform.right * rangeSpeed);
+                    iP.AddForce(Vector2.left * rangeSpeed);
                 }
-                /*        This may not be needed
                 else
                 {
                     rangeNext = Time.time + rangeTimer;
                     rangeCheck = true;
                     Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
-                    iP.AddForce(rangeEmitter.transform.left * rangeSpeed);
+                    iP.AddForce(Vector2.right * rangeSpeed);
                 }
-                */
+                
             }
 
             //
@@ -280,13 +288,13 @@ public class playerController2 : MonoBehaviour {
         }
         if(coll.gameObject.tag == "Player1"){
             if(opponentScript.blockCheck == false){
-                if(opponentScript.lightCheck){
+                if(lightCheck){
                     opponentScript.currentHealth = opponentScript.currentHealth - lightDamage;
                     opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
                     lightCheck = false;
                     actionCheck = false;
                 }
-                if(opponentScript.medCheck){
+                if(medCheck){
                     opponentScript.currentHealth = opponentScript.currentHealth - medDamage;
                     opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
                     medCheck = false;

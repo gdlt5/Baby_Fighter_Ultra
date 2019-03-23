@@ -50,11 +50,12 @@ public class playerController : MonoBehaviour {
     public float rangeTimer;
     private float rangeNext;
     public float rangeSpeed;
+    public GameObject rangeEmitter;
+    public Rigidbody2D projectile;
 
     public float lightDamage;
     public float medDamage;
     public float heavyDamage;
-
 
 
     /*Animator*/
@@ -100,7 +101,6 @@ public class playerController : MonoBehaviour {
             actionCheck = false;
         }
         if(Time.time >= rangeNext && rangeCheck == true){
-           GetComponent<Rigidbody2D>().velocity = Vector2.zero;
            rangeCheck = false;
            actionCheck = false;
         }
@@ -186,6 +186,7 @@ public class playerController : MonoBehaviour {
     		}
 
             if(Input.GetButtonDown("P1_Med") && actionCheck == false){
+                animate.SetInteger("attack", 2);
                 if (transform.position.x < target.position.x){
                     medNext = Time.time + medTimer;
                     medCheck = true;
@@ -200,6 +201,7 @@ public class playerController : MonoBehaviour {
 
 
             if(Input.GetButtonDown("P1_Heavy") && actionCheck == false){
+                animate.SetInteger("attack", 3);
                 if (transform.position.x < target.position.x){
                     heavyNext = Time.time + heavyTimer;
                     heavyDown = Time.time + heavyDownTime;
@@ -217,9 +219,21 @@ public class playerController : MonoBehaviour {
             }
 
             if(Input.GetButtonDown("P1_Range") && actionCheck == false){
-                rangeNext = Time.time + rangeTimer;
-                rangeCheck = true;
-                player.transform.position = Vector2.MoveTowards(player.transform.position, target.position, rangeSpeed * Time.deltaTime);
+                animate.SetInteger("Attack", 4);
+                if (transform.position.x > target.position.x)
+                {
+                    rangeNext = Time.time + rangeTimer;
+                    rangeCheck = true;
+                    Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
+                    iP.AddForce(Vector2.left * rangeSpeed);
+                }
+                else
+                {
+                    rangeNext = Time.time + rangeTimer;
+                    rangeCheck = true;
+                    Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
+                    iP.AddForce(Vector2.right * rangeSpeed);
+                }
             }
 
             if(lightCheck || medCheck || heavyCheck){

@@ -172,6 +172,36 @@ Transform:
   m_Father: {fileID: 984829767}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.245}
+--- !u!1 &60316326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 60316327}
+  m_Layer: 0
+  m_Name: Emitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &60316327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60316326}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.82, y: 1.86, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2088019188}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &87386606
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +255,8 @@ MonoBehaviour:
   rangeCheck: 0
   rangeTimer: 10
   rangeSpeed: 50
+  rangeEmitter: {fileID: 0}
+  projectile: {fileID: 0}
   lightDamage: 10
   medDamage: 15
   heavyDamage: 20
@@ -2414,24 +2446,24 @@ MonoBehaviour:
   player: {fileID: 984829764}
   speed: 5
   startHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   healthBar: {fileID: 2034884049}
   blockCheck: 0
   actionCheck: 0
   lightCheck: 0
-  lightTimer: 0.25
+  lightTimer: 0.1
   lightDistance: 500
   medCheck: 0
   medTimer: 0.125
   medDistance: 500
   heavyCheck: 0
   heavyDownCheck: 0
-  heavyTimer: 0.05
+  heavyTimer: 0.5
   heavyDownTime: 3
-  heavyDistance: 50
+  heavyDistance: 300
   rangeCheck: 0
-  rangeTimer: 0
-  rangeSpeed: 0
+  rangeTimer: 2
+  rangeSpeed: 500
   rangeEmitter: {fileID: 1258485645}
   projectile: {fileID: 1134984555989957774, guid: 461c7c54dd99fd8489c82a5bfa2de9de,
     type: 3}
@@ -2474,7 +2506,39 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!70 &984829779
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984829764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.18378912, y: 10.383173}
+  m_Size: {x: 3.5457764, y: 0.70130116}
+  m_Direction: 1
+--- !u!58 &984829780
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984829764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.8776188, y: 22.641182}
+  serializedVersion: 2
+  m_Radius: 4.4437695
 --- !u!1 &998212846
 GameObject:
   m_ObjectHideFlags: 0
@@ -4021,12 +4085,12 @@ MonoBehaviour:
   fightTime: 100
   timerText: {fileID: 1574623464}
   startTime: 4
-  player1: {fileID: 87386607}
-  player2: {fileID: 2083670294}
+  player1: {fileID: 2088019190}
+  player2: {fileID: 984829776}
   winText: {fileID: 904411579}
-  timeWinner: {fileID: 197887099}
-  textTimer: 3
   disableTimeText: -3
+  returnToTitle: 1
+  animate: {fileID: 0}
 --- !u!1 &1658120189
 GameObject:
   m_ObjectHideFlags: 0
@@ -4934,10 +4998,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088019185}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.08, y: -3.07, z: 0}
+  m_LocalPosition: {x: -2.08, y: -3.64, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 412403755}
+  - {fileID: 60316327}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4988,14 +5053,17 @@ MonoBehaviour:
   heavyCheck: 0
   heavyDownCheck: 0
   heavyTimer: 0.25
-  heavyDownTime: 0
+  heavyDownTime: 2
   heavyDistance: 500
   rangeCheck: 0
-  rangeTimer: 0
-  rangeSpeed: 0
-  lightDamage: 0
-  medDamage: 0
-  heavyDamage: 0
+  rangeTimer: 2
+  rangeSpeed: 500
+  rangeEmitter: {fileID: 60316326}
+  projectile: {fileID: 120161035724043310, guid: c4d0ac8cbfefe4af78d11a62ff2d80c1,
+    type: 3}
+  lightDamage: 10
+  medDamage: 15
+  heavyDamage: 20
 --- !u!50 &2088019191
 Rigidbody2D:
   serializedVersion: 4
