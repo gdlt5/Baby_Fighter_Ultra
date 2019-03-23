@@ -134,7 +134,7 @@ public class playerController2 : MonoBehaviour {
         }
 
         if(coll.gameObject.tag == "Player1"){
-            if(blockCheck == false){
+            if(opponentScript.blockCheck == false){
                 if(opponentScript.lightCheck){
                     currentHealth = currentHealth - 10;
                     healthBar.fillAmount = currentHealth / startHealth;

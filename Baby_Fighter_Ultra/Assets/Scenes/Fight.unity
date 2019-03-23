@@ -2899,9 +2899,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8949770ea1aec46ff8f4a98261ca03ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fightTime: 2
+  fightTime: 100
   timerText: {fileID: 1574623464}
-  startTime: 3
+  startTime: 4
   player1: {fileID: 87386607}
   player2: {fileID: 2083670294}
   winText: {fileID: 904411579}
