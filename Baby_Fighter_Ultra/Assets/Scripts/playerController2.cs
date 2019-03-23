@@ -43,12 +43,19 @@ public class playerController2 : MonoBehaviour {
     private float heavyNext;
     private float heavyDown;
     public float heavyDownTime;
-
     public float heavyDistance;
+
+    public bool rangeCheck = false;
+    public float rangeTimer;
+    private float rangeNext;
+    public float rangeSpeed;
+    public GameObject rangeEmitter;
+    public Rigidbody2D projectile;
 
     public float lightDamage;
     public float medDamage;
     public float heavyDamage;
+    //public float rangeDamage;
 
 
 
@@ -194,6 +201,9 @@ public class playerController2 : MonoBehaviour {
                 }
             }
 
+            //
+            // Heavy attack
+            //
 
             if (Input.GetButtonDown("P2_Heavy") && actionCheck == false)
             {
@@ -214,9 +224,38 @@ public class playerController2 : MonoBehaviour {
                     GetComponent<Rigidbody2D>().AddForce(Vector2.left * heavyDistance);
                 }
 
+
             }
 
-            if (lightCheck || medCheck || heavyCheck)
+            //
+            // Range attack
+            //
+
+            if(Input.GetButtonDown("P2_Range") && actionCheck == false)
+            {
+                if(transform.position.x < target.position.x)
+                {
+                    rangeNext = Time.time + rangeTimer;
+                    rangeCheck = true;
+                    Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
+                    iP.AddForce(rangeEmitter.transform.right * rangeSpeed);
+                }
+                /*        This may not be needed
+                else
+                {
+                    rangeNext = Time.time + rangeTimer;
+                    rangeCheck = true;
+                    Rigidbody2D iP = Instantiate(projectile, rangeEmitter.transform.position, rangeEmitter.transform.rotation) as Rigidbody2D;
+                    iP.AddForce(rangeEmitter.transform.left * rangeSpeed);
+                }
+                */
+            }
+
+            //
+            // Action check
+            //
+
+            if (lightCheck || medCheck || heavyCheck || rangeCheck)
             {
                 actionCheck = true;
             }
@@ -253,6 +292,11 @@ public class playerController2 : MonoBehaviour {
                     opponentScript.currentHealth = opponentScript.currentHealth - heavyDamage;
                     opponentScript.healthBar.fillAmount = opponentScript.currentHealth / opponentScript.startHealth;
                     heavyCheck = false;
+                    actionCheck = false;
+                }
+                if(rangeCheck)
+                {
+                    rangeCheck = false;
                     actionCheck = false;
                 }
             }
