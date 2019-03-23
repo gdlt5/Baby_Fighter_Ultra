@@ -97,7 +97,7 @@ public class playerController2 : MonoBehaviour {
         /* Movement */
         if (transform.position.x < target.position.x)
         {
-            transform.localScale = new Vector2(someScale, transform.localScale.y);
+            transform.localScale = new Vector2(-someScale, transform.localScale.y);
 
             if (Input.GetAxis("P2Hor") > 0.5 && actionCheck == false)
             {
@@ -128,7 +128,7 @@ public class playerController2 : MonoBehaviour {
 
         else
         {
-            transform.localScale = new Vector2(-someScale, transform.localScale.y);
+            transform.localScale = new Vector2(someScale, transform.localScale.y);
 
             if (Input.GetAxis("P2Hor") < -0.5 && actionCheck == false)
             {
