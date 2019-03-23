@@ -12,7 +12,7 @@ public class playerController : MonoBehaviour {
     float someScale;
 
 
-    float startHealth = 100;
+    public float startHealth = 100;
     public float currentHealth;
 
     public Image healthBar;

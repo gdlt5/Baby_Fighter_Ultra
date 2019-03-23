@@ -1,7 +1,9 @@
 fileFormatVersion: 2
 guid: 65d4de4caafb34de1b79b5e958ec1ef8
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: herk_0
+    21300002: herk_1
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -115,11 +117,51 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: herk_0
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 981
+        width: 962
+        height: 1689
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3c4cbd5dc296429db58ca4f9dfe440f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: herk_1
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 1367
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ae206b35dfb14369a81f129a97a3ff7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: cc2bd315f03194aa5b1b242269d29abb
+    spriteID: b9f97c95b4e4645248a03d5e2e776f59
     vertices: []
     indices: 
     edges: []
