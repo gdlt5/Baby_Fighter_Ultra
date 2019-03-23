@@ -115,14 +115,15 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetAxis("P2Hor") > 0.5 && actionCheck == false)
             {
-
+                animate.SetInteger("New Int", 1);
                 Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
-
+                
                 player.transform.Translate(movingVector.x, 0f, 0f);
             }
 
             if (Input.GetAxis("P2Hor") < -0.5 && actionCheck == false)
             {
+                animate.SetInteger("Attack", 5);
                 blockCheck = true;
 
                 Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed / 2) * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
@@ -146,7 +147,7 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetAxis("P2Hor") < -0.5 && actionCheck == false)
             {
-
+                animate.SetInteger("New Int", 1);
                 Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * speed * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
 
                 player.transform.Translate(movingVector.x, 0f, 0f);
@@ -154,6 +155,7 @@ public class playerController2 : MonoBehaviour {
 
             if (Input.GetAxis("P2Hor") > 0.5 && actionCheck == false)
             {
+                animate.SetInteger("Attack", 5);
                 blockCheck = true;
 
                 Vector2 movingVector = new Vector2(Input.GetAxis("P2Hor") * (speed / 2) * Time.deltaTime, Input.GetAxis("P2Vert") * 0 * Time.deltaTime);
